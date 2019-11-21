@@ -1,6 +1,7 @@
 package goose
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"os"
@@ -35,22 +36,22 @@ func (m *Migration) String() string {
 }
 
 // Up runs an up migration.
-func (m *Migration) Up(db *sql.DB) error {
-	if err := m.run(db, true); err != nil {
+func (m *Migration) Up(ctx context.Context, db *sql.DB) error {
+	if err := m.run(ctx, db, true); err != nil {
 		return err
 	}
 	return nil
 }
 
 // Down runs a down migration.
-func (m *Migration) Down(db *sql.DB) error {
-	if err := m.run(db, false); err != nil {
+func (m *Migration) Down(ctx context.Context, db *sql.DB) error {
+	if err := m.run(ctx, db, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *Migration) run(db *sql.DB, direction bool) error {
+func (m *Migration) run(ctx context.Context, db *sql.DB, direction bool) error {
 	switch filepath.Ext(m.Source) {
 	case ".sql":
 		f, err := os.Open(m.Source)
@@ -64,7 +65,7 @@ func (m *Migration) run(db *sql.DB, direction bool) error {
 			return errors.Wrapf(err, "ERROR %v: failed to parse SQL migration file", filepath.Base(m.Source))
 		}
 
-		if err := runSQLMigration(db, statements, useTx, m.Version, direction); err != nil {
+		if err := runSQLMigration(ctx, db, statements, useTx, m.Version, direction); err != nil {
 			return errors.Wrapf(err, "ERROR %v: failed to run SQL migration", filepath.Base(m.Source))
 		}
 
