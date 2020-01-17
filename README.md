@@ -6,7 +6,7 @@ Goose is a database migration tool. Manage your database schema by creating incr
 
 ### Goals of this fork
 
-`github.com/pressly/goose` is a fork of `bitbucket.org/liamstask/goose` with the following changes:
+`github.com/c9s/goose` is a fork of `bitbucket.org/liamstask/goose` with the following changes:
 - No config files
 - [Default goose binary](./cmd/goose/main.go) can migrate SQL files only
 - Go migrations:
@@ -26,7 +26,7 @@ Goose is a database migration tool. Manage your database schema by creating incr
 
 # Install
 
-    $ go get -u github.com/pressly/goose/cmd/goose
+    $ go get -u github.com/c9s/goose/cmd/goose
 
 This will install the `goose` binary to your `$GOPATH/bin` directory.
 
@@ -221,7 +221,7 @@ language plpgsql;
 ## Go Migrations
 
 1. Create your own goose binary, see [example](./examples/go-migrations)
-2. Import `github.com/pressly/goose`
+2. Import `github.com/c9s/goose`
 3. Register your migration functions
 4. Run goose command, ie. `goose.Up(db *sql.DB, dir string)`
 
@@ -233,7 +233,7 @@ package migrations
 import (
 	"database/sql"
 
-	"github.com/pressly/goose"
+	"github.com/c9s/goose"
 )
 
 func init() {
@@ -268,7 +268,7 @@ To help you adopt this approach, `create` will use the current timestamp as the 
 
 Licensed under [MIT License](./LICENSE)
 
-[GoDoc]: https://godoc.org/github.com/pressly/goose
-[GoDoc Widget]: https://godoc.org/github.com/pressly/goose?status.svg
-[Travis]: https://travis-ci.org/pressly/goose
-[Travis Widget]: https://travis-ci.org/pressly/goose.svg?branch=master
+[GoDoc]: https://godoc.org/github.com/c9s/goose
+[GoDoc Widget]: https://godoc.org/github.com/c9s/goose?status.svg
+[Travis]: https://travis-ci.org/c9s/goose
+[Travis Widget]: https://travis-ci.org/c9s/goose.svg?branch=master
