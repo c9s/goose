@@ -6,9 +6,11 @@ Goose is a database migration tool. Manage your database schema by creating incr
 
 ### Goals of this fork
 
-`github.com/c9s/goose` is a fork of `bitbucket.org/liamstask/goose` with the following changes:
+`github.com/c9s/goose` is a fork of `github.com/pressly/goose` with the following changes:
+
 - No config files
 - [Default goose binary](./cmd/goose/main.go) can migrate SQL files only
+- Backward compatible with the original goose migration tool.
 - Go migrations:
     - We don't `go build` Go migrations functions on-the-fly
       from within the goose binary
@@ -22,6 +24,7 @@ Goose is a database migration tool. Manage your database schema by creating incr
     - goose pkg doesn't register any SQL drivers anymore,
       thus no driver `panic()` conflict within your codebase!
     - goose pkg doesn't have any vendor dependencies anymore
+- The goose migration table can be specified to the custom table name.
 - We use timestamped migrations by default but recommend a hybrid approach of using timestamps in the development process and sequential versions in production.
 
 # Install
