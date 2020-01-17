@@ -8,11 +8,15 @@ Goose is a database migration tool. Manage your database schema by creating incr
 
 `github.com/c9s/goose` is a fork of `github.com/pressly/goose` with the following changes:
 
-- No config files
-- [Default goose binary](./cmd/goose/main.go) can migrate SQL files only
 - Backward compatible with the original goose migration tool.
 - The goose migration table can be specified to the custom table name.
 - Added Go module support
+- Goose environment variable support for driver and DSN.
+
+Difference from `bitbucket.org/liamstask/goose`:
+
+- No config files
+- [Default goose binary](./cmd/goose/main.go) can migrate SQL files only
 - Go migrations:
     - We don't `go build` Go migrations functions on-the-fly
       from within the goose binary
@@ -63,6 +67,14 @@ Examples:
     goose redshift "postgres://user:password@qwerty.us-east-1.redshift.amazonaws.com:5439/db" status
     goose tidb "user:password@/dbname?parseTime=true" status
     goose mssql "sqlserver://user:password@dbname:1433?database=master" status
+
+Environment Variable Support:
+
+    GOOSE_DRIVER=sqlite3 GOOSE_DBSTRING=./foo.db goose status
+    GOOSE_DRIVER=sqlite3 GOOSE_DBSTRING=./foo.db goose create init sql
+    GOOSE_DRIVER=postgres GOOSE_DBSTRING="user=postgres dbname=postgres sslmode=disable" goose status
+    GOOSE_DRIVER=mysql GOOSE_DBSTRING="user:password@/dbname" goose status
+    GOOSE_DRIVER=redshift GOOSE_DBSTRING="postgres://user:password@qwerty.us-east-1.redshift.amazonaws.com:5439/db" goose status
 
 Options:
 
