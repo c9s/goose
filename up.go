@@ -1,11 +1,12 @@
 package goose
 
 import (
+	"context"
 	"database/sql"
 )
 
 // UpTo migrates up to a specific version.
-func UpTo(db *sql.DB, dir string, version int64) error {
+func UpTo(ctx context.Context, db *sql.DB, dir string, version int64) error {
 	migrations, err := CollectMigrations(dir, minVersion, version)
 	if err != nil {
 		return err
@@ -26,19 +27,19 @@ func UpTo(db *sql.DB, dir string, version int64) error {
 			return err
 		}
 
-		if err = next.Up(db); err != nil {
+		if err = next.Up(ctx, db); err != nil {
 			return err
 		}
 	}
 }
 
 // Up applies all available migrations.
-func Up(db *sql.DB, dir string) error {
-	return UpTo(db, dir, maxVersion)
+func Up(ctx context.Context, db *sql.DB, dir string) error {
+	return UpTo(ctx, db, dir, maxVersion)
 }
 
 // UpByOne migrates up by a single version.
-func UpByOne(db *sql.DB, dir string) error {
+func UpByOne(ctx context.Context, db *sql.DB, dir string) error {
 	migrations, err := CollectMigrations(dir, minVersion, maxVersion)
 	if err != nil {
 		return err
@@ -57,7 +58,7 @@ func UpByOne(db *sql.DB, dir string) error {
 		return err
 	}
 
-	if err = next.Up(db); err != nil {
+	if err = next.Up(ctx, db); err != nil {
 		return err
 	}
 
