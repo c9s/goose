@@ -2,6 +2,7 @@ sudo: false
 language: go
 go:
 - 1.12
+- 1.13
 
 script:
 - mkdir -p bin
