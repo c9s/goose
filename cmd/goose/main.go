@@ -90,6 +90,12 @@ func mergeArgs(args []string) []string {
 	if len(args) < 1 {
 		return args
 	}
+
+	// prefer arguments over the environment variables
+	if len(args) == 3 {
+		return args
+	}
+
 	if d := os.Getenv(envGooseDriver); d != "" {
 		args = append([]string{d}, args...)
 	}
