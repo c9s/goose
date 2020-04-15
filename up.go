@@ -54,6 +54,7 @@ func UpByOne(ctx context.Context, db *sql.DB, dir string) error {
 	if err != nil {
 		if err == ErrNoNextVersion {
 			log.Printf("goose: no migrations to run. current version: %d\n", currentVersion)
+			return nil
 		}
 		return err
 	}
